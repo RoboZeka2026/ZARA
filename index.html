@@ -3,20 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZARA Trend / Mock E-Commerce</title>
+    <title>ZARA Studio / High-Fashion Mockup</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
 
     <style>
-        /* GENEL AYARLAR (Zara Minimalizmi) */
+        /* PRO KÜTÜPHANE VE ZERO AYARLARI */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Montserrat', sans-serif;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
+            -webkit-font-smoothing: antialiased;
         }
 
         html {
@@ -26,9 +27,21 @@
         body {
             background-color: #fff;
             color: #000;
+            overflow-x: hidden;
         }
 
-        /* NAVİGASYON (ÜST BAR) */
+        /* AKICI SCROLLBAR */
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #fff;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #000;
+        }
+
+        /* NAVBAR (Maksimum Akıcılıkta Geçiş) */
         .navbar {
             position: fixed;
             top: 0;
@@ -37,250 +50,480 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 25px 40px;
-            z-index: 1000;
+            padding: 35px 50px;
+            z-index: 999;
             background: transparent;
-            transition: all 0.3s ease;
+            transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         .navbar.scrolled {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 15px 40px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 20px 50px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.02);
         }
 
         .logo h1 {
-            font-size: 2.5rem;
-            font-weight: 400;
-            letter-spacing: 8px;
+            font-size: 2.2rem;
+            font-weight: 300;
+            letter-spacing: 12px;
             cursor: pointer;
+            transition: transform 0.3s ease;
         }
-
-        .menu-icon {
-            cursor: pointer;
-        }
-        .menu-icon span {
-            display: block;
-            width: 24px;
-            height: 1px;
-            background: #000;
-            margin-bottom: 6px;
+        .logo h1:hover {
+            transform: scale(1.02);
         }
 
         .nav-right a {
             text-decoration: none;
             color: #000;
             font-size: 0.75rem;
-            margin-left: 20px;
+            margin-left: 30px;
             font-weight: 400;
+            position: relative;
+            cursor: pointer;
+            padding-bottom: 4px;
         }
 
-        /* KAHRAMAN ALANI (HERO IMAGE) */
+        /* Profesyonel Alt Çizgi Animasyonu */
+        .nav-right a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: #000;
+            transition: width 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .nav-right a:hover::after {
+            width: 100%;
+        }
+
+        /* HERO AREA (Giriş Efektli Sinematik Alan) */
         .hero-section {
             position: relative;
             width: 100%;
             height: 100vh;
             overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .hero-bg img {
             width: 100%;
             height: 100vh;
             object-fit: cover;
-            object-position: center 20%;
+            object-position: center 15%;
+            transform: scale(1.1);
+            animation: zoomOutHero 2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        }
+
+        @keyframes zoomOutHero {
+            to { transform: scale(1); }
         }
 
         .hero-content {
             position: absolute;
-            bottom: 10%;
+            bottom: 12%;
             left: 5%;
-            color: #000;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1.2s cubic-bezier(0.25, 1, 0.5, 1) 0.5s forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .hero-content h2 {
-            font-size: 2.5rem;
-            font-weight: 300;
-            margin-bottom: 20px;
+            font-size: 3rem;
+            font-weight: 200;
+            margin-bottom: 25px;
+            letter-spacing: 4px;
         }
 
         .cta-btn {
             display: inline-block;
-            padding: 10px 30px;
+            padding: 12px 40px;
             border: 1px solid #000;
             color: #000;
             text-decoration: none;
             font-size: 0.8rem;
-            transition: all 0.3s ease;
+            font-weight: 500;
+            background: transparent;
+            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         .cta-btn:hover {
             background: #000;
             color: #fff;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
 
-        /* ÜRÜN LİSTESİ ALANI */
+        /* VITRIN / GRID */
         .container {
-            padding: 80px 40px;
+            padding: 120px 50px;
+            max-width: 1600px;
+            margin: 0 auto;
         }
 
         .section-title {
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             font-weight: 300;
-            margin-bottom: 40px;
+            margin-bottom: 60px;
             text-align: center;
+            letter-spacing: 4px;
+            position: relative;
         }
 
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 40px 20px;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 50px 25px;
         }
 
+        /* PREMIUM ÜRÜN KARTI */
         .product-card {
             display: flex;
             flex-direction: column;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInGrid 0.8s ease forwards;
+        }
+
+        @keyframes fadeInGrid {
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .product-img-wrapper {
             position: relative;
             width: 100%;
+            height: 500px;
             overflow: hidden;
-            background-color: #f7f7f7;
+            background-color: #f4f4f4;
+            cursor: pointer;
         }
 
         .product-img-wrapper img {
             width: 100%;
-            height: auto;
-            display: block;
-            transition: transform 0.6s ease;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
+        /* Kart Hover Efekti */
         .product-card:hover .product-img-wrapper img {
-            transform: scale(1.03);
+            transform: scale(1.05);
         }
 
+        /* Dipten Çıkan Buton Animasyonu */
         .quick-add {
             position: absolute;
-            bottom: 0;
+            bottom: -60px;
             left: 0;
             width: 100%;
-            padding: 15px;
+            padding: 20px;
             background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border: none;
             color: #000;
             font-size: 0.75rem;
+            font-weight: 500;
             cursor: pointer;
-            opacity: 0;
-            transition: opacity 0.3s ease;
+            transition: bottom 0.4s cubic-bezier(0.25, 1, 0.5, 1), background 0.3s;
+        }
+
+        .quick-add:hover {
+            background: #000;
+            color: #fff;
         }
 
         .product-img-wrapper:hover .quick-add {
-            opacity: 1;
+            bottom: 0;
         }
 
         .product-info {
-            margin-top: 15px;
+            margin-top: 20px;
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
             font-size: 0.8rem;
         }
 
         .product-name {
             font-weight: 300;
-            max-width: 70%;
-            color: #333;
+            color: #111;
+            max-width: 75%;
+            line-height: 1.4;
         }
 
         .product-price {
+            font-weight: 500;
+            color: #000;
+        }
+
+        /* MODAL GİBİ YAĞ GİBİ KAYAN SEPET */
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: -460px;
+            width: 450px;
+            height: 100vh;
+            background: #fff;
+            box-shadow: -10px 0 40px rgba(0,0,0,0.03);
+            z-index: 1000;
+            transition: right 0.5s cubic-bezier(0.32, 0.94, 0.6, 1);
+            display: flex;
+            flex-direction: column;
+            padding: 40px;
+        }
+
+        .cart-sidebar.open {
+            right: 0;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+        }
+
+        .cart-header h3 {
+            font-size: 1.2rem;
             font-weight: 400;
+            letter-spacing: 2px;
+        }
+
+        .close-cart {
+            background: none;
+            border: none;
+            font-size: 1.4rem;
+            cursor: pointer;
+            font-weight: 200;
+            transition: transform 0.3s;
+        }
+        .close-cart:hover {
+            transform: rotate(90deg);
+        }
+
+        .cart-items {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        /* Sepet İçi Giriş Animasyonlu Elemanlar */
+        .cart-item {
+            display: flex;
+            margin-bottom: 25px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid #f7f7f7;
+            animation: itemSlideIn 0.4s ease forwards;
+        }
+
+        @keyframes itemSlideIn {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .cart-item img {
+            width: 80px;
+            height: 110px;
+            object-fit: cover;
+            margin-right: 20px;
+            background-color: #f4f4f4;
+        }
+
+        .cart-item-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .cart-item-name {
+            font-size: 0.8rem;
+            font-weight: 300;
+            color: #222;
+            line-height: 1.4;
+        }
+
+        .cart-item-price {
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-top: 8px;
+        }
+
+        .remove-item {
+            background: none;
+            border: none;
+            color: #888;
+            font-size: 0.7rem;
+            text-align: left;
+            cursor: pointer;
+            text-decoration: underline;
+            margin-top: 8px;
+            transition: color 0.2s;
+        }
+        .remove-item:hover {
+            color: #000;
+        }
+
+        .cart-footer {
+            border-top: 1px solid #eee;
+            padding-top: 30px;
+        }
+
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: 25px;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            padding: 20px;
+            background: #000;
+            color: #fff;
+            border: none;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 3px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .checkout-btn:hover {
+            background: #333;
+        }
+
+        /* SİNEMATİK ARKA PLAN BLUR */
+        .cart-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0,0,0,0.15);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            z-index: 998;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+        }
+
+        .cart-overlay.show {
+            opacity: 1;
+            pointer-events: auto;
         }
 
         footer {
             text-align: center;
-            padding: 60px 20px;
-            font-size: 0.65rem;
-            color: #777;
+            padding: 80px 20px;
+            font-size: 0.7rem;
+            color: #888;
             border-top: 1px solid #eee;
         }
 
+        /* RESPONSIVE DÜZENLER */
         @media (max-width: 768px) {
-            .navbar {
-                padding: 20px;
-            }
-            .navbar.scrolled {
-                padding: 15px 20px;
-            }
-            .logo h1 {
-                font-size: 1.8rem;
-            }
-            .products-grid {
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            }
+            .navbar { padding: 25px 25px; }
+            .navbar.scrolled { padding: 15px 25px; }
+            .logo h1 { font-size: 1.6rem; letter-spacing: 6px; }
+            .hero-content h2 { font-size: 2.2rem; }
+            .container { padding: 80px 20px; }
+            .products-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+            .product-img-wrapper { height: 400px; }
+            .cart-sidebar { width: 100%; right: -100%; padding: 25px; }
         }
     </style>
 </head>
 <body>
 
+    <div class="cart-overlay" id="cartOverlay"></div>
+
     <header class="navbar" id="navbar">
-        <div class="menu-icon">
-            <span></span>
-            <span></span>
-        </div>
+        <div class="menu-icon"></div>
         <div class="logo">
             <h1>ZARA</h1>
         </div>
         <div class="nav-right">
-            <a href="#" class="search-btn">ARA</a>
-            <a href="#" class="cart-btn">SEPET (<span id="cart-count">0</span>)</a>
+            <a href="#">ARA</a>
+            <a id="cartToggle">SEPETİM (<span id="cart-count">0</span>)</a>
         </div>
     </header>
 
     <section class="hero-section">
         <div class="hero-bg">
-            <img src="https://images.pexels.com/photos/934070/pexels-photo-934070.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Yeni Sezon">
+            <img src="https://images.pexels.com/photos/1926769/pexels-photo-1926769.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Zara New Season Campaign">
         </div>
         <div class="hero-content">
-            <h2>YENİ KOLEKSİYON</h2>
-            <a href="#vitrin" class="cta-btn">KEŞFET</a>
+            <h2>NEW COLLECTION '26</h2>
+            <a href="#vitrin" class="cta-btn">GÖRÜNTÜLE</a>
         </div>
     </section>
 
     <main class="container" id="vitrin">
-        <h3 class="section-title">HAFTANIN ÖNE ÇIKANLARI</h3>
+        <h3 class="section-title">HAFTALIN YENİLERİ</h3>
         <div class="products-grid" id="products-container"></div>
     </main>
 
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3>SEPETİNİZ</h3>
+            <button class="close-cart" id="closeCart">✕</button>
+        </div>
+        <div class="cart-items" id="cartItemsContainer"></div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>TAHMİNİ TOPLAM:</span>
+                <span id="cartTotalAmount">0,00 TL</span>
+            </div>
+            <button class="checkout-btn" onclick="alert('Siparişiniz Hazırlanıyor. Teşekkürler!')">SİPARİŞİ ONAYLA</button>
+        </div>
+    </div>
+
     <footer>
-        <p>© 2026 ZARA MOCKUP PROJECT. HİÇBİR HAKKI SAKLI DEĞİLDİR (EĞİTİM AMAÇLIDIR).</p>
+        <p>© 2026 ZARA PREMIUM STUDIO PROJESİ. TAAHHÜTSÜZDÜR VE EĞİTİM MODELİDİR.</p>
     </footer>
 
     <script>
-        // Kesin çalışan yüksek kaliteli Pexels linkleri eklendi
+        // Birebir ürün açıklamalarıyla eşleşen stüdyo çekim görselleri
         const urunler = [
             {
                 id: 1,
                 isim: "Keten Karışımlı Oversize Blazer Ceket",
                 fiyat: 2499.00,
-                gorsel: "https://images.pexels.com/photos/157675/fashion-men-s-individuality-black-and-white-157675.jpeg?auto=compress&cs=tinysrgb&w=600"
+                gorsel: "https://images.pexels.com/photos/13015849/pexels-photo-13015849.jpeg?auto=compress&cs=tinysrgb&w=600"
             },
             {
                 id: 2,
-                isim: "Dökümlü Poplin Gömlek",
+                isim: "Dökümlü Klasik Poplin Gömlek",
                 fiyat: 999.00,
-                gorsel: "https://images.pexels.com/photos/3758623/pexels-photo-3758623.jpeg?auto=compress&cs=tinysrgb&w=600"
+                gorsel: "https://images.pexels.com/photos/7622416/pexels-photo-7622416.jpeg?auto=compress&cs=tinysrgb&w=600"
             },
             {
                 id: 3,
-                isim: "Minimalist Deri Omuz Çantası",
+                isim: "Minimalist Deri Zincirli Omuz Çantası",
                 fiyat: 1899.00,
                 gorsel: "https://images.pexels.com/photos/1152077/pexels-photo-1152077.jpeg?auto=compress&cs=tinysrgb&w=600"
             },
             {
                 id: 4,
-                isim: "Yüksek Bel Mini Triko Etek",
+                isim: "Yüksek Bel Dökümlü Triko Etek",
                 fiyat: 799.00,
-                gorsel: "https://images.pexels.com/photos/15864820/pexels-photo-15864820/free-photo-of-moda-kadin-model-etek.jpeg?auto=compress&cs=tinysrgb&w=600"
+                gorsel: "https://images.pexels.com/photos/14850311/pexels-photo-14850311.jpeg?auto=compress&cs=tinysrgb&w=600"
             }
         ];
 
@@ -289,15 +532,21 @@
         const productsContainer = document.getElementById('products-container');
         const cartCount = document.getElementById('cart-count');
         const navbar = document.getElementById('navbar');
+        const cartSidebar = document.getElementById('cartSidebar');
+        const cartToggle = document.getElementById('cartToggle');
+        const closeCart = document.getElementById('closeCart');
+        const cartOverlay = document.getElementById('cartOverlay');
+        const cartItemsContainer = document.getElementById('cartItemsContainer');
+        const cartTotalAmount = document.getElementById('cartTotalAmount');
 
+        // Vitrini Gelişmiş Animasyon Sıralamasıyla İnşa Etme (Staggered Animation Effect)
         function vitriniOlustur() {
             productsContainer.innerHTML = ""; 
-            
-            urunler.forEach(urun => {
+            urunler.forEach((urun, index) => {
                 const urunKarti = `
-                    <div class="product-card">
+                    <div class="product-card" style="animation-delay: ${index * 0.1}s">
                         <div class="product-img-wrapper">
-                            <img src="${urun.gorsel}" alt="${urun.isim}">
+                            <img src="${urun.gorsel}" alt="${urun.isim}" loading="lazy">
                             <button class="quick-add" onclick="sepeteEkle(${urun.id})">SEPETE EKLE</button>
                         </div>
                         <div class="product-info">
@@ -315,15 +564,60 @@
             if(secilenUrun) {
                 sepet.push(secilenUrun);
                 sepetiGuncelle();
+                sepetiAc();
             }
+        }
+
+        function sepettenSil(index) {
+            sepet.splice(index, 1);
+            sepetiGuncelle();
         }
 
         function sepetiGuncelle() {
             cartCount.textContent = sepet.length;
+            cartItemsContainer.innerHTML = "";
+            let toplam = 0;
+
+            if (sepet.length === 0) {
+                cartItemsContainer.innerHTML = `<p style="font-size: 0.8rem; font-weight:200; color:#888; text-align:center; margin-top:50px;">Sepetiniz boş.</p>`;
+            } else {
+                sepet.forEach((urun, index) => {
+                    toplam += urun.fiyat;
+                    const sepetUrunu = `
+                        <div class="cart-item">
+                            <img src="${urun.gorsel}" alt="${urun.isim}">
+                            <div class="cart-item-info">
+                                <div>
+                                    <div class="cart-item-name">${urun.isim}</div>
+                                    <div class="cart-item-price">${urun.fiyat.toLocaleString('tr-TR', { minimumFractionDigits: 2 })} TL</div>
+                                </div>
+                                <button class="remove-item" onclick="sepettenSil(${index})">KALDIR</button>
+                            </div>
+                        </div>
+                    `;
+                    cartItemsContainer.innerHTML += sepetUrunu;
+                });
+            }
+            cartTotalAmount.textContent = toplam.toLocaleString('tr-TR', { minimumFractionDigits: 2 }) + " TL";
         }
 
+        function sepetiAc() {
+            cartSidebar.classList.add('open');
+            cartOverlay.classList.add('show');
+        }
+
+        function sepetiKapat() {
+            cartSidebar.classList.remove('open');
+            cartOverlay.classList.remove('show');
+        }
+
+        cartToggle.addEventListener('click', sepetiAc);
+        closeCart.addEventListener('click', sepetiKapat);
+        cartOverlay.addEventListener('click', sepetiKapat);
+
+        // İvmeli Scroll Navigasyon Etkisi
         window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
+            if (window.scrollY > 30) {
                 navbar.classList.add('scrolled');
             } else {
                 navbar.classList.remove('scrolled');
